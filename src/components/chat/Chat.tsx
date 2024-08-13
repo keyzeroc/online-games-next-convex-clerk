@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -25,6 +25,7 @@ export default function Chat({ roomId }: ChatProps) {
   const chat = useQuery(api.chat.getChatMessages, { roomId: roomId });
   const inputRef = useRef<HTMLInputElement>(null);
   const sendMessageMutation = useMutation(api.chat.sendMessage);
+  const [isChatOpened, setIsChatOpened] = useState(false);
   const { isLoaded, user } = useUser();
 
   const onSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,14 +34,32 @@ export default function Chat({ roomId }: ChatProps) {
 
     if (!typedMessage || typedMessage.trim() === "") return;
     await sendMessageMutation({ roomId, message: typedMessage });
+    inputRef.current.value = "";
   };
 
+  const scrollViewToLastMessage = async (ms: number) => {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+    inputRef?.current?.scrollIntoView();
+  };
+
+  useLayoutEffect(() => {
+    (async () => {
+      await scrollViewToLastMessage(1000);
+    })();
+  }, [isChatOpened]);
+
+  useLayoutEffect(() => {
+    (async () => {
+      await scrollViewToLastMessage(100);
+    })();
+  }, [chat?.messages]);
+
   return (
-    <Sheet>
+    <Sheet onOpenChange={(isOpen) => setIsChatOpened(isOpen)}>
       <SheetTrigger className="fixed bottom-8 right-8 z-20 rounded-full bg-primary p-4">
         <MessageSquare stroke="#fff" />
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-2">
+      <SheetContent className="flex flex-col gap-2 overflow-y-scroll">
         <SheetHeader>
           <SheetTitle className="text-center">
             {!roomId ? "Main" : "Game"} room chat
@@ -49,11 +68,11 @@ export default function Chat({ roomId }: ChatProps) {
         {chat && (
           <ul>
             {chat?.messages.map((message, index) => (
-              <li key={"msg:" + index} className="py-1">
-                <span>
-                  <span className="font-bold">{message.userName+": "}</span>{message.message}
+              <li key={"msg:" + index} className="message py-1">
+                <span id="last">
+                  <span className="font-bold">{message.userName + ": "}</span>
+                  {message.message}
                 </span>
-                {/* <span>{message.message}</span> */}
               </li>
             ))}
           </ul>
