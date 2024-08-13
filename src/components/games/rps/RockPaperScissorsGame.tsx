@@ -12,12 +12,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
 
 type Props = {
-  roomId: Id<"room">;
+  roomDetails: AllDatabaseTypes["room"];
 };
 
-export default function RockPaperScissorsGame({ roomId }: Props) {
-  const roomDetails = useQuery(api.room.getRoomById, { roomId });
-  const gameDetails = useQuery(api.rps.getGameDetails, { roomId });
+export default function RockPaperScissorsGame({ roomDetails }: Props) {
+  const gameDetails = useQuery(api.rps.getGameDetails, {
+    roomId: roomDetails._id,
+  });
   const makeAMoveMutation = useMutation(api.rps.makeAMove);
   const resetGameStateMutation = useMutation(api.rps.resetGameState);
   const { toast } = useToast();
@@ -48,34 +49,36 @@ export default function RockPaperScissorsGame({ roomId }: Props) {
   }, [gameDetails?.rounds]);
 
   return (
-    <section className="flex flex-col gap-8">
+    <>
       <Chat roomId={roomDetails?._id} />
-      {roomDetails?.players.find((pl) => pl.userId === user?.id) && (
-        <div className="flex w-full flex-col gap-12">
-          <h3 className="text- text-center text-3xl">
-            Round {(gameDetails?.rounds?.length as number) + 1}
-          </h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "4fr 1fr 4fr",
-            }}
-            className="gap-8"
-          >
-            <Player
-              onPlayerMove={onPlayerMove}
-              gameDetails={gameDetails as AllDatabaseTypes["rps"]}
-            />
-            <div className="w-fit max-w-fit self-center justify-self-center text-3xl font-bold">
-              VS
+      <section className="flex flex-col gap-8">
+        {roomDetails?.players.find((pl) => pl.userId === user?.id) && (
+          <div className="flex w-full flex-col gap-12">
+            <h3 className="text-center text-3xl">
+              Round {(gameDetails?.rounds?.length as number) + 1}
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "4fr 1fr 4fr",
+              }}
+              className="gap-8"
+            >
+              <Player
+                onPlayerMove={onPlayerMove}
+                gameDetails={gameDetails as AllDatabaseTypes["rps"]}
+              />
+              <div className="w-fit max-w-fit self-center justify-self-center text-3xl font-bold">
+                VS
+              </div>
+              <Opponent
+                roomDetails={roomDetails}
+                gameDetails={gameDetails as AllDatabaseTypes["rps"]}
+              />
             </div>
-            <Opponent
-              roomDetails={roomDetails}
-              gameDetails={gameDetails as AllDatabaseTypes["rps"]}
-            />
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+    </>
   );
 }

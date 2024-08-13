@@ -5,7 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import React from "react";
 import Spinner from "@/components/Spinner";
-import ScoreAndName from "./ScoreAndName";
+import ScoreAndName from "../ScoreAndName";
 
 type OpponentProps = {
   roomDetails: AllDatabaseTypes["room"];
@@ -15,27 +15,26 @@ type OpponentProps = {
 export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
   const { user } = useUser();
   const { theme } = useTheme();
-  const opponentMove = gameDetails.moves.find(
+  const opponentMove = gameDetails?.moves.find(
     (move) => move.playerId !== user?.id,
   );
   const isSpinnerDisplayed =
-    !opponentMove?.choice || gameDetails.moves.length < 2;
+    !opponentMove?.choice || gameDetails?.moves.length < 2;
 
   return (
     <div className="flex flex-col items-center gap-8">
-      {roomDetails.players.length === 1 && (
+      {roomDetails?.players.length === 1 && (
         <p className="text-center text-xl">No opponent yet</p>
       )}
-      {roomDetails.players.length > 1 && (
+      {roomDetails?.players.length > 1 && (
         <>
           <ScoreAndName
             length={
-              gameDetails.rounds.filter((round) => round.winnerId !== user?.id)
+              gameDetails?.rounds.filter((round) => round.winnerId !== user?.id)
                 .length
             }
-            playerId={opponentMove?.playerId as string}
             username={
-              roomDetails.players.find((pl) => pl.userId !== user?.id)
+              roomDetails?.players.find((pl) => pl.userId !== user?.id)
                 ?.userName as string
             }
           />
@@ -44,7 +43,7 @@ export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
               <Spinner />
             </div>
           )}
-          {opponentMove?.choice && gameDetails.moves.length === 2 && (
+          {opponentMove?.choice && gameDetails?.moves.length === 2 && (
             <div className="aspect-square min-h-12 min-w-12 rounded-md p-2">
               <img
                 className={`${theme === "dark" ? "" : "invert"}`}

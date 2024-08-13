@@ -4,7 +4,7 @@ import { AllDatabaseTypes } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { Crown } from "lucide-react";
-import ScoreAndName from "./ScoreAndName";
+import ScoreAndName from "../ScoreAndName";
 
 type PlayerProps = {
   onPlayerMove: (choice: string) => void;
@@ -16,16 +16,15 @@ export default function Player({ onPlayerMove, gameDetails }: PlayerProps) {
   const { theme } = useTheme();
 
   const playerMove =
-    user && gameDetails.moves.find((move) => move.playerId === user.id);
+    user && gameDetails?.moves.find((move) => move.playerId === user.id);
 
   return (
     <div className="flex flex-col gap-8">
       <ScoreAndName
         length={
-          gameDetails.rounds.filter((round) => round.winnerId === user?.id)
+          gameDetails?.rounds.filter((round) => round.winnerId === user?.id)
             .length
         }
-        playerId={user?.id as string}
         username={user?.fullName as string}
       />
       <ul className="flex justify-center gap-4">

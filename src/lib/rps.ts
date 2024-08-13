@@ -38,6 +38,5 @@ export const decideRpsWinner = (moves: RpsMoves) => {
   } else {
     return moves[1].playerId;
   }
-
 }
 

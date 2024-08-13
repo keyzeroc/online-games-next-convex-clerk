@@ -29,6 +29,10 @@ export default defineSchema({
   tictactoe: defineTable({
     roomId: v.id('room'),
     board: v.array(v.string()),
+    currentMoveSymbol: v.union(v.string(), v.null()),
+    rounds: v.array(v.object({
+      winnerId: v.union(v.string(), v.null())
+    })),
     playerSymbols: v.array(v.object({
       playerId: v.string(),
       symbol: v.string()

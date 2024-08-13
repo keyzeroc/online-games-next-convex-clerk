@@ -93,7 +93,9 @@ const createEmptyGameState = async (gameType: string, ctx: MutationCtx, currentU
   if (gameType === 'tictactoe') {
     return await ctx.db.insert('tictactoe', {
       roomId,
+      rounds: [],
       board: ["", "", "", "", "", "", "", "", ""],
+      currentMoveSymbol: "X",
       playerSymbols: [{
         playerId: currentUser.subject,
         symbol: "X"

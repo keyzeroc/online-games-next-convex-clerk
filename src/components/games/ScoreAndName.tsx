@@ -4,14 +4,9 @@ import React from "react";
 type ScoreAndNameProps = {
   username: string;
   length: number;
-  playerId: string;
 };
 
-export default function ScoreAndName({
-  username,
-  length,
-  playerId,
-}: ScoreAndNameProps) {
+export default function ScoreAndName({ username, length }: ScoreAndNameProps) {
   const arr = new Array(length).fill("");
 
   return (
@@ -19,7 +14,7 @@ export default function ScoreAndName({
       <p className="text-nowrap text-xl">{username}</p>
       <ul className="flex flex-row gap-2 p-0">
         {arr.map((_, index) => (
-          <li className="w-5" key={playerId + ":" + index}>
+          <li className="w-5" key={username + "-" + length + ":" + index}>
             <Crown fill="#7C3AED" />
           </li>
         ))}
