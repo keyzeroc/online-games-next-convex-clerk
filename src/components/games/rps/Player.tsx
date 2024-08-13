@@ -2,8 +2,6 @@
 import { possibleChoices } from "@/lib/rps";
 import { AllDatabaseTypes } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
-import { useTheme } from "next-themes";
-import { Crown } from "lucide-react";
 import ScoreAndName from "../ScoreAndName";
 
 type PlayerProps = {
@@ -13,7 +11,6 @@ type PlayerProps = {
 
 export default function Player({ onPlayerMove, gameDetails }: PlayerProps) {
   const { user } = useUser();
-  const { theme } = useTheme();
 
   const playerMove =
     user && gameDetails?.moves.find((move) => move.playerId === user.id);
@@ -37,7 +34,7 @@ export default function Player({ onPlayerMove, gameDetails }: PlayerProps) {
               >
                 <button onClick={() => onPlayerMove(choice.name)}>
                   <img
-                    className={`${theme === "dark" ? "" : "invert"} hover:scale-105`}
+                    className={`hover:scale-105`}
                     src={choice.image}
                     alt={choice.name}
                   />
@@ -48,7 +45,6 @@ export default function Player({ onPlayerMove, gameDetails }: PlayerProps) {
         {playerMove?.choice && (
           <li className="aspect-square min-h-12 min-w-12 rounded-md p-2">
             <img
-              className={`${theme === "dark" ? "" : "invert"}`}
               src={
                 possibleChoices.find(
                   (choice) => choice.name === playerMove?.choice,

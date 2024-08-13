@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useRef, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -7,12 +8,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
 import { MessageSquare } from "lucide-react";
 import { useMutation, useQuery } from "convex/react";
 import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useUser } from "@clerk/nextjs";
 
 type ChatProps = {
   roomId?: Id<"room">;
@@ -20,20 +23,22 @@ type ChatProps = {
 
 export default function Chat({ roomId }: ChatProps) {
   const chat = useQuery(api.chat.getChatMessages, { roomId: roomId });
-  const [typedMessage, setTypedMessage] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const sendMessageMutation = useMutation(api.chat.sendMessage);
+  const { isLoaded, user } = useUser();
 
   const onSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const typedMessage = inputRef?.current?.value;
+
     if (!typedMessage || typedMessage.trim() === "") return;
     await sendMessageMutation({ roomId, message: typedMessage });
-    setTypedMessage("");
   };
 
   return (
     <Sheet>
-      <SheetTrigger className="fixed bottom-8 right-8 rounded-full bg-primary p-4">
-        <MessageSquare />
+      <SheetTrigger className="fixed bottom-8 right-8 z-20 rounded-full bg-primary p-4">
+        <MessageSquare stroke="#fff" />
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-2">
         <SheetHeader>
@@ -44,9 +49,11 @@ export default function Chat({ roomId }: ChatProps) {
         {chat && (
           <ul>
             {chat?.messages.map((message, index) => (
-              <li key={"msg:" + index} className="flex gap-2 p-2">
-                <span>{message.userName + ":"}</span>
-                <span>{message.message}</span>
+              <li key={"msg:" + index} className="py-1">
+                <span>
+                  <span className="font-bold">{message.userName+": "}</span>{message.message}
+                </span>
+                {/* <span>{message.message}</span> */}
               </li>
             ))}
           </ul>
@@ -55,11 +62,14 @@ export default function Chat({ roomId }: ChatProps) {
 
         <form className="mt-auto flex items-end gap-2" onSubmit={onSendMessage}>
           <Input
-            value={typedMessage}
+            ref={inputRef}
+            autoComplete="off"
+            disabled={isLoaded && !user}
             name="message"
-            onChangeCapture={(e) => setTypedMessage(e.currentTarget.value)}
           />
-          <Button type="submit">Send</Button>
+          <Button disabled={isLoaded && !user} type="submit">
+            {isLoaded && user ? "Send" : "Not signed in"}
+          </Button>
         </form>
       </SheetContent>
     </Sheet>

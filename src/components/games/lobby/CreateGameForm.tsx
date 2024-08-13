@@ -1,9 +1,9 @@
 "use client";
 
 import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { api } from "../../../../convex/_generated/api";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 
 type CreateGameFormProps = {
@@ -32,8 +32,14 @@ export default function CreateGameForm({ gameType }: CreateGameFormProps) {
 
   return (
     <form onSubmit={createGameHandler} className="flex flex-col gap-4">
-      <Input name="name" type="text" placeholder="Please set room name" />
       <Input
+        autoComplete="off"
+        name="name"
+        type="text"
+        placeholder="Please set room name"
+      />
+      <Input
+        autoComplete="off"
         name="password"
         type="text"
         placeholder="Set room password or leave empty"

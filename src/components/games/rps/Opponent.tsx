@@ -14,7 +14,6 @@ type OpponentProps = {
 
 export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
   const { user } = useUser();
-  const { theme } = useTheme();
   const opponentMove = gameDetails?.moves.find(
     (move) => move.playerId !== user?.id,
   );
@@ -30,8 +29,10 @@ export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
         <>
           <ScoreAndName
             length={
-              gameDetails?.rounds.filter((round) => round.winnerId !== user?.id)
-                .length
+              gameDetails?.rounds.filter(
+                (round) =>
+                  round.winnerId !== null && round.winnerId !== user?.id,
+              ).length
             }
             username={
               roomDetails?.players.find((pl) => pl.userId !== user?.id)
@@ -46,7 +47,6 @@ export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
           {opponentMove?.choice && gameDetails?.moves.length === 2 && (
             <div className="aspect-square min-h-12 min-w-12 rounded-md p-2">
               <img
-                className={`${theme === "dark" ? "" : "invert"}`}
                 src={
                   possibleChoices.find(
                     (choice) => choice.name === opponentMove.choice,

@@ -41,24 +41,26 @@ export const joinRoom = mutation({
     password: v.string()
   },
   handler: async (ctx, { roomId, password }) => {
-    if (!roomId) return [];
+    if (!roomId) return false;
     const user = await ctx.auth.getUserIdentity();
-    if (!user) return [];
+    if (!user) return false;
 
     const foundRoom = await ctx.db.get(roomId);
-    if (!foundRoom) return [];
-    if (foundRoom.players.find(pl => pl.userId === user.subject)) return [];
-    if (foundRoom.password !== "" && !(await isPasswordCorrect(password, foundRoom.password))) return [];
+    if (!foundRoom) return false;
+    const foundPlayer = foundRoom.players.find(pl => pl.userId === user.subject)
+    if (foundPlayer) return true;
+    if (!foundPlayer && foundRoom.players.length === 2) return false;
+    if (foundRoom.password !== "" && !(await isPasswordCorrect(password, foundRoom.password))) return false;
 
     await assignGameStateOnJoin(foundRoom.gameType, ctx, user, roomId);
 
-    return await ctx.db.patch(roomId, {
+    await ctx.db.patch(roomId, {
       players: [...foundRoom.players, {
         userId: user.subject,
         userName: user.name as string
       }]
     })
-
+    return true;
   }
 })
 export const getRoomsByGameType = query({
