@@ -120,7 +120,7 @@ export function JoinGameDialog({ room }: JoinGameDialogProps) {
           )}
         <DialogFooter className="flex items-center">
           <DialogDescription className="mr-auto">
-            Your are trying to join "{room.name}"
+            Your are trying to join - {room.name}
           </DialogDescription>
           <Button onClick={onJoin} type="submit">
             Join!
