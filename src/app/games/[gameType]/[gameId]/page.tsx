@@ -7,6 +7,8 @@ import { useUser } from "@clerk/nextjs";
 import RockPaperScissorsGame from "../../../../components/games/rps/RockPaperScissorsGame";
 import TicTacToeGame from "../../../../components/games/tictactoe/TicTacToeGame";
 import { api } from "../../../../../convex/_generated/api";
+import { GAME_TYPES } from "@/lib/gametypes";
+import BattleShips from "@/components/games/battleships/BattleShips";
 
 export default function Game() {
   const router = useRouter();
@@ -24,10 +26,15 @@ export default function Game() {
     <section>
       {roomDetails?.players.find((pl) => pl.userId === user?.id) && (
         <Authenticated>
-          {gameType === "rps" && (
+          {gameType === GAME_TYPES.rps.shortName && (
             <RockPaperScissorsGame roomDetails={roomDetails} />
           )}
-          {gameType === "tictactoe" && <TicTacToeGame roomDetails={roomDetails} />}
+          {gameType === GAME_TYPES.tictactoe.shortName && (
+            <TicTacToeGame roomDetails={roomDetails} />
+          )}
+           {gameType === GAME_TYPES.battleships.shortName && (
+            <BattleShips roomDetails={roomDetails} />
+          )}
         </Authenticated>
       )}
     </section>

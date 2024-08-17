@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as battleships from "../battleships.js";
 import type * as chat from "../chat.js";
 import type * as room from "../room.js";
 import type * as rps from "../rps.js";
@@ -28,6 +29,7 @@ import type * as tictactoe from "../tictactoe.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  battleships: typeof battleships;
   chat: typeof chat;
   room: typeof room;
   rps: typeof rps;

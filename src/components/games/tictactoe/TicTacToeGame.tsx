@@ -10,11 +10,11 @@ import Opponent from "./Opponent";
 import { useEffect } from "react";
 import { toast } from "@/components/ui/use-toast";
 
-type Props = {
+type TicTacToeGameProps = {
   roomDetails: AllDatabaseTypes["room"];
 };
 
-export default function TicTacToeGame({ roomDetails }: Props) {
+export default function TicTacToeGame({ roomDetails }: TicTacToeGameProps) {
   const gameDetails = useQuery(api.tictactoe.getGameDetails, {
     roomId: roomDetails?._id,
   });

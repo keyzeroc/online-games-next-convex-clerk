@@ -1,4 +1,3 @@
-
 export const decideTicTacToeWinner = (board: string[]) => {
   const isXWinner = checkLines("X", board);
   const is0Winner = checkLines("0", board);

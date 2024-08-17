@@ -38,6 +38,17 @@ export default defineSchema({
       symbol: v.string()
     }))
   }),
+  battleships: defineTable({
+    roomId: v.id('room'),
+    rounds: v.array(v.object({
+      winnerId: v.union(v.string(), v.null())
+    })),
+    currentMovePlayerId: v.union(v.string(), v.null()),
+    playerBoards: v.array(v.object({
+      playerId: v.string(),
+      board: v.array(v.array(v.string()))
+    }))
+  }),
   chat: defineTable({
     roomId: v.union(v.id("room"), v.null()),
     messages: v.array(

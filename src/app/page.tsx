@@ -4,7 +4,7 @@ import { Unauthenticated } from "convex/react";
 import { SignInButton } from "@clerk/nextjs";
 import Chat from "../components/chat/Chat";
 import { useRouter } from "next/navigation";
-import { GAME_TYPES } from "@/lib/gamestate";
+import { GAME_TYPES } from "@/lib/gametypes";
 
 export default function Home() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function Home() {
         </div>
       </Unauthenticated>
       <ul className="flex justify-center gap-8">
-        {GAME_TYPES.map((gameType) => (
+        {Object.values(GAME_TYPES).map((gameType) => (
           <li
             className={`flex h-96 min-h-96 w-96 min-w-96 items-center justify-center border border-primary hover:scale-105`}
             key={"gt:" + gameType.shortName}
@@ -30,7 +30,7 @@ export default function Home() {
               onClick={() => router.push(`/games/${gameType.shortName}`)}
               className={`h-full w-full bg-cover`}
               style={{
-                backgroundImage: `url('/assets/game-icons/${gameType.fullName}_themed.png')`,
+                backgroundImage: `url(${gameType.image})`,
               }}
             ></button>
           </li>

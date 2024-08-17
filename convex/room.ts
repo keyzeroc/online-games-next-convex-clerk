@@ -1,11 +1,11 @@
 import { v } from "convex/values";
 import { MutationCtx, mutation, query } from "./_generated/server";
 import { hashPassword } from "@/lib/hashing";
-import { GAME_TYPES } from '../src/lib/gamestate';
+import { GAME_TYPES } from '../src/lib/gametypes';
 import { UserIdentity } from "convex/server";
 import { Id } from "./_generated/dataModel";
 import { isPasswordCorrect } from "@/lib/hashing";
-
+import { createRandomBoard } from "@/lib/battleships";
 
 export const createRoom = mutation({
   args: {
@@ -19,7 +19,7 @@ export const createRoom = mutation({
 
     if (!name || name === "") return [];
     if (!gameType || gameType === "") return [];
-    if (!GAME_TYPES.find(GAME_TYPE => GAME_TYPE.shortName === gameType)) return [];
+    if (!GAME_TYPES[gameType as keyof typeof GAME_TYPES]) return [];
 
     const roomId = await ctx.db.insert('room', {
       name: name,
@@ -63,6 +63,7 @@ export const joinRoom = mutation({
     return true;
   }
 })
+
 export const getRoomsByGameType = query({
   args: { gameType: v.string() },
   handler: async (ctx, { gameType }) => {
@@ -104,6 +105,19 @@ const createEmptyGameState = async (gameType: string, ctx: MutationCtx, currentU
       }],
     })
   }
+  if (gameType === 'battleships') {
+    return await ctx.db.insert('battleships', {
+      roomId,
+      rounds: [],
+      currentMovePlayerId: currentUser.subject,
+      playerBoards: [
+        {
+          playerId: currentUser.subject,
+          board: createRandomBoard(9)
+        }
+      ],
+    })
+  }
 }
 
 const assignGameStateOnJoin = async (gameType: string, ctx: MutationCtx, currentUser: UserIdentity, roomId: Id<'room'>) => {
@@ -115,6 +129,13 @@ const assignGameStateOnJoin = async (gameType: string, ctx: MutationCtx, current
         ...foundGameState?.playerSymbols,
         { playerId: currentUser.subject, symbol: '0' }
       ]
+    })
+  }
+  if (gameType === 'battleships') {
+    const foundGameState = await ctx.db.query('battleships').filter(q => q.eq(q.field('roomId'), roomId)).first();
+    if (!foundGameState) return [];
+    return await ctx.db.patch(foundGameState?._id, {
+      playerBoards: [...foundGameState.playerBoards, { playerId: currentUser.subject, board: createRandomBoard(9) }]
     })
   }
 }

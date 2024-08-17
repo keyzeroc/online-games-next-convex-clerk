@@ -6,12 +6,12 @@ import Chat from "@/components/chat/Chat";
 import { api } from "../../../../convex/_generated/api";
 import CreateGameForm from "@/components/games/lobby/CreateGameForm";
 import { useUser } from "@clerk/nextjs";
-import { GAME_TYPES } from "@/lib/gamestate";
+import { GAME_TYPES } from "@/lib/gametypes";
 import GamesTable from "@/components/games/lobby/GamesTable";
 
 export default function GamePage() {
   const { gameType } = useParams<{ gameType: string }>();
-  const foundGametype = GAME_TYPES.find((gt) => gt.shortName === gameType);
+  const foundGametype = GAME_TYPES[gameType as keyof typeof GAME_TYPES];
   if (!foundGametype) notFound();
   const { isSignedIn, isLoaded } = useUser();
 
