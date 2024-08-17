@@ -5,10 +5,11 @@ Currently web app has below functionality:
 - Ability to sign up/in through Google OAuth
 - Chat with other players (has all chat and room chats)
 - Create/join games
-- Games available:
+- Available games:
   - Rock Paper Scissors
   - Tic Tac Toe
-  - BattleShips (WIP)
+  - BattleShips
+  - Other games (WIP)
 
 Frameworks and libraries used in the project:
 - React.js / Next.js
