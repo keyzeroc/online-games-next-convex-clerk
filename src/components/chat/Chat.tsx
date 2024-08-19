@@ -81,6 +81,7 @@ export default function Chat({ roomId }: ChatProps) {
 
         <form className="mt-auto flex items-end gap-2" onSubmit={onSendMessage}>
           <Input
+            className="border-2"
             ref={inputRef}
             autoComplete="off"
             disabled={isLoaded && !user}

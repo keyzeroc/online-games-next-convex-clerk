@@ -33,12 +33,14 @@ export default function CreateGameForm({ gameType }: CreateGameFormProps) {
   return (
     <form onSubmit={createGameHandler} className="flex flex-col gap-4">
       <Input
+        className="border-2"
         autoComplete="off"
         name="name"
         type="text"
         placeholder="Please set room name"
       />
       <Input
+        className="border-2"
         autoComplete="off"
         name="password"
         type="text"

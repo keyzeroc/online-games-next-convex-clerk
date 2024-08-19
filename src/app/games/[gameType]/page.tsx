@@ -22,10 +22,12 @@ export default function GamePage() {
       <Chat />
       <h2 className="self-center text-4xl">{foundGametype.fullName}</h2>
       <div className="flex flex-col gap-8 lg:flex-row">
-        <div className="flex min-w-72 flex-col gap-4 text-center">
-          <p className="text-xl">Create Game</p>
-          {isLoaded && isSignedIn && <CreateGameForm gameType={gameType} />}
-        </div>
+        {isLoaded && isSignedIn && (
+          <div className="flex min-w-72 flex-col gap-4 text-center">
+            <p className="text-xl">Create Game</p>
+            <CreateGameForm gameType={gameType} />
+          </div>
+        )}
         <div className="flex w-full flex-col gap-4">
           {rooms && rooms.length > 0 && (
             <>

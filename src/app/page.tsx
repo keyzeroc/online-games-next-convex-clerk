@@ -23,7 +23,7 @@ export default function Home() {
       <ul className="flex justify-center gap-8">
         {Object.values(GAME_TYPES).map((gameType) => (
           <li
-            className={`flex h-96 min-h-96 w-96 min-w-96 items-center justify-center border border-primary hover:scale-105`}
+            className={`flex h-96 min-h-96 w-96 min-w-96 items-center justify-center border-2  rounded-md hover:scale-105`}
             key={"gt:" + gameType.shortName}
           >
             <button
