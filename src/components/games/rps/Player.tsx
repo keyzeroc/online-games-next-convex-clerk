@@ -17,7 +17,7 @@ export default function Player({ onPlayerMove, gameDetails }: PlayerProps) {
     user && gameDetails?.moves.find((move) => move.playerId === user.id);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col items-center gap-8">
       <ScoreAndName
         length={
           gameDetails?.rounds.filter((round) => round.winnerId === user?.id)

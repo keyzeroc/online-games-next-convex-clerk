@@ -2,7 +2,6 @@
 import { possibleChoices } from "@/lib/rps";
 import { AllDatabaseTypes } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
-import { useTheme } from "next-themes";
 import React from "react";
 import Spinner from "@/components/Spinner";
 import ScoreAndName from "../ScoreAndName";
@@ -14,11 +13,10 @@ type OpponentProps = {
 
 export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
   const { user } = useUser();
-  const opponentMove = gameDetails?.moves.find(
+  const opponentChoice = gameDetails?.moves.find(
     (move) => move.playerId !== user?.id,
-  );
-  const isSpinnerDisplayed =
-    !opponentMove?.choice || gameDetails?.moves.length < 2;
+  )?.choice;
+  const isSpinnerDisplayed = !opponentChoice || gameDetails?.moves.length < 2;
 
   return (
     <div className="flex flex-col items-center gap-8">
@@ -44,15 +42,15 @@ export default function Opponent({ roomDetails, gameDetails }: OpponentProps) {
               <Spinner />
             </div>
           )}
-          {opponentMove?.choice && gameDetails?.moves.length === 2 && (
+          {opponentChoice && gameDetails?.moves.length === 2 && (
             <div className="aspect-square min-h-12 min-w-12 rounded-md p-2">
               <img
                 src={
                   possibleChoices.find(
-                    (choice) => choice.name === opponentMove.choice,
+                    (choice) => choice.name === opponentChoice,
                   )?.image
                 }
-                alt={opponentMove.choice}
+                alt={opponentChoice}
               />
             </div>
           )}
