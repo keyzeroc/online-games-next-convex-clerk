@@ -41,18 +41,12 @@ export default function Chat({ roomId }: ChatProps) {
     await new Promise((resolve) => setTimeout(resolve, ms));
     inputRef?.current?.scrollIntoView();
   };
-
-  useLayoutEffect(() => {
-    (async () => {
-      await scrollViewToLastMessage(1000);
-    })();
-  }, [isChatOpened]);
-
+  
   useLayoutEffect(() => {
     (async () => {
       await scrollViewToLastMessage(100);
     })();
-  }, [chat?.messages]);
+  }, [chat?.messages,isChatOpened]);
 
   return (
     <Sheet onOpenChange={(isOpen) => setIsChatOpened(isOpen)}>
