@@ -44,6 +44,7 @@ export const makeAMove = mutation({
     foundGameState.board[cellId] = playerSymbol.symbol;
 
     const winnerSymbol = decideTicTacToeWinner(foundGameState.board);
+    
     if (winnerSymbol !== "") {
       return await ctx.db.patch(gameId, {
         board: foundGameState.board,

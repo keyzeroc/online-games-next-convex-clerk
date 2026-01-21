@@ -7,7 +7,8 @@
     "dev:convex": "pnpm convex dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.8",
@@ -19,7 +20,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
-    "class-variance-authority": "^0.7.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "convex": "^1.13.2",
     "lucide-react": "^0.408.0",
