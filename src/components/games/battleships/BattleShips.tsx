@@ -59,34 +59,49 @@ export default function BattleShips({ roomDetails }: BattleShipsProps) {
   return (
     <div className="flex flex-col gap-8">
       <Chat roomId={roomDetails?._id} />
-      <div className="flex justify-around gap-4">
-        {contentLoading && <p>Loading...</p>}
-        {/* PLAYER */}
-        {!contentLoading && (
-          <GameMember
-            onMove={onMoveHandler}
-            isOpponent={false}
-            userName={user?.fullName as string}
-            userId={user?.id as string}
-            gameDetails={gameDetails as AllDatabaseTypes["battleships"]}
-          />
-        )}
-        {/* OPPONENT */}
-        {!contentLoading && (
-          <GameMember
-            onMove={onMoveHandler}
-            isOpponent={true}
-            userName={
-              roomDetails.players.find((pl) => pl.userId !== user?.id)
-                ?.userName as string
-            }
-            userId={
-              roomDetails.players.find((pl) => pl.userId !== user?.id)
-                ?.userId as string
-            }
-            gameDetails={gameDetails as AllDatabaseTypes["battleships"]}
-          />
-        )}
+      <div className="relative">
+        <div className="relative flex justify-around gap-8 px-4">
+          {contentLoading && (
+            <div className="flex items-center justify-center w-full py-12">
+              <p className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Loading...</p>
+            </div>
+          )}
+          {/* PLAYER */}
+          {!contentLoading && (
+            <GameMember
+              onMove={onMoveHandler}
+              isOpponent={false}
+              userName={user?.fullName as string}
+              userId={user?.id as string}
+              gameDetails={gameDetails as AllDatabaseTypes["battleships"]}
+            />
+          )}
+          {!contentLoading && (
+            <div className="flex items-start justify-center pt-16">
+              <div className="relative">
+                <div className="relative px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full text-white text-3xl font-bold shadow-xl">
+                  VS
+                </div>
+              </div>
+            </div>
+          )}
+          {/* OPPONENT */}
+          {!contentLoading && (
+            <GameMember
+              onMove={onMoveHandler}
+              isOpponent={true}
+              userName={
+                roomDetails.players.find((pl) => pl.userId !== user?.id)
+                  ?.userName as string
+              }
+              userId={
+                roomDetails.players.find((pl) => pl.userId !== user?.id)
+                  ?.userId as string
+              }
+              gameDetails={gameDetails as AllDatabaseTypes["battleships"]}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

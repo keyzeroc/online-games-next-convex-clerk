@@ -61,34 +61,61 @@ export default function TicTacToeGame({ roomDetails }: TicTacToeGameProps) {
   return (
     <div className="flex flex-col gap-8">
       <Chat roomId={roomDetails?._id} />
-      <div className="flex justify-around gap-4">
-        <Player
-          userId={user?.id}
-          userName={user?.fullName as string}
-          playerSymbol={playerSymbol?.symbol as string}
-          gameDetails={gameDetails as AllDatabaseTypes["tictactoe"]}
-        />
-        <Opponent
-          opponentUserId={opponentSymbol?.playerId}
-          opponentUserName={
-            roomDetails?.players.find(
-              (pl) => pl.userId === opponentSymbol?.playerId,
-            )?.userName as string
-          }
-          opponentSymbol={playerSymbol?.symbol === "X" ? "0" : "X"}
-          gameDetails={gameDetails as AllDatabaseTypes["tictactoe"]}
-        />
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 blur-3xl" />
+        <div className="relative flex justify-around gap-8 px-4">
+          <Player
+            userId={user?.id}
+            userName={user?.fullName as string}
+            playerSymbol={playerSymbol?.symbol as string}
+            gameDetails={gameDetails as AllDatabaseTypes["tictactoe"]}
+          />
+          <div className="flex items-center justify-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 blur-xl opacity-50 animate-pulse" />
+              <div className="relative px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white text-3xl font-bold shadow-2xl">
+                VS
+              </div>
+            </div>
+          </div>
+          <Opponent
+            opponentUserId={opponentSymbol?.playerId}
+            opponentUserName={
+              roomDetails?.players.find(
+                (pl) => pl.userId === opponentSymbol?.playerId,
+              )?.userName as string
+            }
+            opponentSymbol={playerSymbol?.symbol === "X" ? "0" : "X"}
+            gameDetails={gameDetails as AllDatabaseTypes["tictactoe"]}
+          />
+        </div>
       </div>
-      <div className="grid grid-cols-3 self-center border">
-        {gameDetails?.board.map((cellValue, index) => (
-          <button
-            className={`flex max-h-32 max-w-32 items-center justify-center border p-16 text-4xl text-primary ${cellValue === "" ? "cursor-pointer" : "cursor-default"}`}
-            onClick={() => onPlayerMove(index)}
-            key={"c:" + index}
-          >
-            {cellValue}
-          </button>
-        ))}
+      <div className="relative self-center">
+        <div className="absolute -inset-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-30" />
+        <div className="relative grid grid-cols-3 gap-3 p-4 bg-gradient-to-br from-gray-900/40 to-gray-800/40 backdrop-blur-sm rounded-2xl border-2 border-purple-500/30 shadow-2xl">
+          {gameDetails?.board.map((cellValue, index) => (
+            <button
+              className={`group relative flex h-24 w-24 items-center justify-center rounded-xl text-5xl font-bold transition-all duration-300 ${
+                cellValue === ""
+                  ? "cursor-pointer bg-gradient-to-br from-gray-700/50 to-gray-800/50 hover:from-purple-600/30 hover:to-pink-600/30 hover:scale-105 hover:shadow-lg border-2 border-gray-600/50 hover:border-purple-500/50"
+                  : "cursor-default bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-2 border-gray-700/50"
+              } ${
+                cellValue === "X"
+                  ? "text-blue-400"
+                  : cellValue === "0"
+                    ? "text-red-400"
+                    : "text-gray-500"
+              }`}
+              onClick={() => onPlayerMove(index)}
+              key={"c:" + index}
+            >
+              {cellValue === "" && (
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 rounded-xl transition-all duration-300" />
+              )}
+              <span className="relative z-10 drop-shadow-lg">{cellValue}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
