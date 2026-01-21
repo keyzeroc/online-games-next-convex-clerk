@@ -26,14 +26,22 @@ export default function GameMember({
     gameDetails?.currentMovePlayerId === userId;
 
   return (
-    <div className="flex flex-col items-center gap-8">
-      <ScoreAndName
-        username={userName ? userName : "No Opponent Yet"}
-        length={
-          gameDetails?.rounds.filter((round) => round.winnerId === userId)
-            ?.length as number
-        }
-      />
+    <div className="flex flex-col items-center gap-6">
+      <div className="relative">
+        <div className={`relative backdrop-blur-sm border rounded-lg p-4 ${
+          isOpponent
+            ? "bg-gradient-to-br from-red-500/10 to-orange-500/10 border-red-500/20"
+            : "bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20"
+        }`}>
+          <ScoreAndName
+            username={userName ? userName : "No Opponent Yet"}
+            length={
+              gameDetails?.rounds.filter((round) => round.winnerId === userId)
+                ?.length as number
+            }
+          />
+        </div>
+      </div>
       {board && (
         <GameBoard
           isCurrentMove={isCurrentMove}
@@ -43,8 +51,11 @@ export default function GameMember({
         />
       )}
       {isCurrentMove && (
-        <div className="h-10 w-10">
-          <Spinner />
+        <div className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white font-semibold shadow-lg">
+          <div className="h-8 w-8">
+            <Spinner />
+          </div>
+          <span>{isOpponent ? "Opponent's Turn" : "Your Turn"}</span>
         </div>
       )}
     </div>

@@ -56,9 +56,12 @@ export default function RockPaperScissorsGame({ roomDetails }: Props) {
       <Chat roomId={roomDetails?._id} />
       {roomDetails?.players.find((pl) => pl.userId === user?.id) && (
         <div className="flex w-full flex-col gap-12">
-          <h3 className="text-center text-3xl">
-            Round {(gameDetails?.rounds?.length as number) + 1}
-          </h3>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 blur-3xl" />
+            <h3 className="relative text-center text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Round {(gameDetails?.rounds?.length as number) + 1}
+            </h3>
+          </div>
           <div
             style={{
               display: "grid",
@@ -70,8 +73,13 @@ export default function RockPaperScissorsGame({ roomDetails }: Props) {
               onPlayerMove={onPlayerMove}
               gameDetails={gameDetails as AllDatabaseTypes["rps"]}
             />
-            <div className="w-fit max-w-fit self-center justify-self-center text-3xl font-bold">
-              VS
+            <div className="flex items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 blur-xl opacity-50 animate-pulse" />
+                <div className="relative px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white text-3xl font-bold shadow-2xl">
+                  VS
+                </div>
+              </div>
             </div>
             <Opponent
               roomDetails={roomDetails}

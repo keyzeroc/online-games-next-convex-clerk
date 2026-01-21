@@ -32,12 +32,14 @@ export default function Opponent({
         />
       )}
       {!opponentUserId && (
-        <GameMember
-          username={"No opponent yet!"}
-          symbol={"-"}
-          score={0}
-          isCurrentMove={false}
-        />
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg blur opacity-25" />
+            <p className="relative text-center text-lg font-semibold bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent py-4">
+              Waiting for opponent...
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
