@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Online Games",
   description: "created by keyzeroc",
+  icons: {
+    icon: "favicon.ico",
+  },
 };
 
 export default function RootLayout({
