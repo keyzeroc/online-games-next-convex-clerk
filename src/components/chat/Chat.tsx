@@ -50,12 +50,12 @@ export default function Chat({ roomId }: ChatProps) {
 
   return (
     <Sheet onOpenChange={(isOpen) => setIsChatOpened(isOpen)}>
-      <SheetTrigger className="fixed bottom-8 right-8 z-20 rounded-full bg-primary p-4">
-        <MessageSquare stroke="#fff" />
+      <SheetTrigger className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-20 rounded-full bg-primary p-3 md:p-4 shadow-lg hover:shadow-xl transition-shadow">
+        <MessageSquare className="h-5 w-5 md:h-6 md:w-6" stroke="#fff" />
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-2 overflow-y-scroll">
+      <SheetContent className="flex flex-col gap-2 overflow-y-scroll w-[85vw] sm:w-full">
         <SheetHeader>
-          <SheetTitle className="text-center">
+          <SheetTitle className="text-center text-base sm:text-lg">
             {!roomId ? "Main" : "Game"} room chat
           </SheetTitle>
         </SheetHeader>
@@ -63,7 +63,7 @@ export default function Chat({ roomId }: ChatProps) {
           <ul>
             {chat?.messages.map((message, index) => (
               <li key={"msg:" + index} className="message py-1">
-                <span id="last">
+                <span id="last" className="text-sm sm:text-base">
                   <span className="font-bold">{message.userName + ": "}</span>
                   {message.message}
                 </span>
@@ -71,17 +71,17 @@ export default function Chat({ roomId }: ChatProps) {
             ))}
           </ul>
         )}
-        {!chat && <p>No messages yet!</p>}
+        {!chat && <p className="text-sm sm:text-base">No messages yet!</p>}
 
         <form className="mt-auto flex items-end gap-2" onSubmit={onSendMessage}>
           <Input
-            className="border-2"
+            className="border-2 text-sm sm:text-base"
             ref={inputRef}
             autoComplete="off"
             disabled={isLoaded && !user}
             name="message"
           />
-          <Button disabled={isLoaded && !user} type="submit">
+          <Button className="text-sm sm:text-base" disabled={isLoaded && !user} type="submit">
             {isLoaded && user ? "Send" : "Not signed in"}
           </Button>
         </form>

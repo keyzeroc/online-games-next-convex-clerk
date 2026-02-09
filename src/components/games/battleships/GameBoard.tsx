@@ -40,8 +40,8 @@ export default function GameBoard({
   const yAxisMarks = board.map((_, index) => index + 1);
   const xAxisMarks = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substring(0, board.length);
 
-  const cellClasses = "flex h-12 w-12 items-center justify-center border border-blue-400/30 bg-gradient-to-br from-blue-100/50 to-cyan-100/50 dark:from-blue-900/30 dark:to-cyan-900/30 transition-all duration-200";
-  const headerCellClasses = "flex h-12 w-12 items-center justify-center border border-blue-500/40 bg-gradient-to-br from-blue-200 to-cyan-200 dark:from-blue-800 dark:to-cyan-800 font-bold text-blue-900 dark:text-blue-100";
+  const cellClasses = "flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 items-center justify-center border border-blue-400/30 bg-gradient-to-br from-blue-100/50 to-cyan-100/50 dark:from-blue-900/30 dark:to-cyan-900/30 transition-all duration-200";
+  const headerCellClasses = "flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 items-center justify-center border border-blue-500/40 bg-gradient-to-br from-blue-200 to-cyan-200 dark:from-blue-800 dark:to-cyan-800 font-bold text-blue-900 dark:text-blue-100 text-xs sm:text-sm md:text-base";
 
   return (
     <div className="flex items-center justify-center">

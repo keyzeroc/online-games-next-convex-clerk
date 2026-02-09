@@ -26,9 +26,9 @@ export default function GameMember({
     gameDetails?.currentMovePlayerId === userId;
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-4 md:gap-6">
       <div className="relative">
-        <div className={`relative backdrop-blur-sm border rounded-lg p-4 ${
+        <div className={`relative backdrop-blur-sm border rounded-lg p-2 sm:p-3 md:p-4 ${
           isOpponent
             ? "bg-gradient-to-br from-red-500/10 to-orange-500/10 border-red-500/20"
             : "bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20"
@@ -51,8 +51,8 @@ export default function GameMember({
         />
       )}
       {isCurrentMove && (
-        <div className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white font-semibold shadow-lg">
-          <div className="h-8 w-8">
+        <div className="flex items-center gap-2 md:gap-3 px-3 py-2 md:px-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white text-sm md:text-base font-semibold shadow-lg">
+          <div className="h-6 w-6 md:h-8 md:w-8">
             <Spinner />
           </div>
           <span>{isOpponent ? "Opponent's Turn" : "Your Turn"}</span>

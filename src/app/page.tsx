@@ -20,10 +20,10 @@ export default function Home() {
           with Google account to be able to create and join games
         </div>
       </Unauthenticated>
-      <ul className="flex justify-center gap-8">
+      <ul className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8">
         {Object.values(GAME_TYPES).map((gameType) => (
           <li
-            className={`flex h-96 min-h-96 w-96 min-w-96 items-center justify-center border-2  rounded-md hover:scale-105`}
+            className={`flex h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-96 lg:w-96 items-center justify-center border-2 rounded-md hover:scale-105 transition-transform`}
             key={"gt:" + gameType.shortName}
           >
             <button

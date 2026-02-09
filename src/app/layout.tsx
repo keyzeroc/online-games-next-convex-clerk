@@ -26,7 +26,7 @@ export default function RootLayout({
         <Providers>
           <Toaster />
           <Header />
-          <main className="p-8">{children}</main>
+          <main className="p-4 md:p-6 lg:p-8">{children}</main>
         </Providers>
       </body>
     </html>
