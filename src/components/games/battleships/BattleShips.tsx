@@ -57,13 +57,13 @@ export default function BattleShips({ roomDetails }: BattleShipsProps) {
   const contentLoading = !isLoaded || !gameDetails || !roomDetails;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4 md:gap-6 lg:gap-8">
       <Chat roomId={roomDetails?._id} />
       <div className="relative">
-        <div className="relative flex justify-around gap-8 px-4">
+        <div className="relative flex flex-col md:flex-row justify-around gap-4 md:gap-6 lg:gap-8 px-2 sm:px-4">
           {contentLoading && (
             <div className="flex items-center justify-center w-full py-12">
-              <p className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Loading...</p>
+              <p className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Loading...</p>
             </div>
           )}
           {/* PLAYER */}
@@ -77,9 +77,9 @@ export default function BattleShips({ roomDetails }: BattleShipsProps) {
             />
           )}
           {!contentLoading && (
-            <div className="flex items-start justify-center pt-16">
+            <div className="flex items-center justify-center md:items-start md:pt-16">
               <div className="relative">
-                <div className="relative px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full text-white text-3xl font-bold shadow-xl">
+                <div className="relative px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full text-white text-2xl md:text-3xl font-bold shadow-xl">
                   VS
                 </div>
               </div>

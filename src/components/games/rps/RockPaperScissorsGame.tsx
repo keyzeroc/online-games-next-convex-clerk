@@ -52,23 +52,17 @@ export default function RockPaperScissorsGame({ roomDetails }: Props) {
   }, [gameDetails?.rounds]);
 
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex flex-col gap-4 md:gap-6 lg:gap-8">
       <Chat roomId={roomDetails?._id} />
       {roomDetails?.players.find((pl) => pl.userId === user?.id) && (
-        <div className="flex w-full flex-col gap-12">
+        <div className="flex w-full flex-col gap-6 md:gap-8 lg:gap-12">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 blur-3xl" />
-            <h3 className="relative text-center text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h3 className="relative text-center text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               Round {(gameDetails?.rounds?.length as number) + 1}
             </h3>
           </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "4fr 1fr 4fr",
-            }}
-            className="gap-8"
-          >
+          <div className="flex flex-row justify-around items-center gap-4 md:gap-6 lg:gap-8">
             <Player
               onPlayerMove={onPlayerMove}
               gameDetails={gameDetails as AllDatabaseTypes["rps"]}
@@ -76,7 +70,7 @@ export default function RockPaperScissorsGame({ roomDetails }: Props) {
             <div className="flex items-center justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 blur-xl opacity-50 animate-pulse" />
-                <div className="relative px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white text-3xl font-bold shadow-2xl">
+                <div className="relative px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white text-2xl md:text-3xl font-bold shadow-2xl">
                   VS
                 </div>
               </div>

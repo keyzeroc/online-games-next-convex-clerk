@@ -32,10 +32,10 @@ export default function Opponent({
         />
       )}
       {!opponentUserId && (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-3 md:gap-4">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg blur opacity-25" />
-            <p className="relative text-center text-lg font-semibold bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent py-4">
+            <p className="relative text-center text-sm sm:text-base md:text-lg font-semibold bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent py-3 md:py-4">
               Waiting for opponent...
             </p>
           </div>

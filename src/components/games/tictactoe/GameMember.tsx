@@ -15,9 +15,9 @@ export default function GameMember({
 }: GameMemberProps) {
 
   return (
-    <div className="flex items-center flex-col gap-4">
+    <div className="flex items-center flex-col gap-3 md:gap-4">
       <div className="relative">
-        <div className={`relative flex items-center justify-center w-20 h-20 rounded-full text-5xl font-bold transition-all duration-300 ${
+        <div className={`relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full text-4xl sm:text-5xl font-bold transition-all duration-300 ${
           isCurrentMove
             ? "bg-gradient-to-br from-purple-600 to-pink-600 text-white scale-110"
             : symbol === "X"
@@ -30,7 +30,7 @@ export default function GameMember({
         </div>
       </div>
       <div className="relative">
-        <div className={`relative backdrop-blur-sm border rounded-lg p-4 ${
+        <div className={`relative backdrop-blur-sm border rounded-lg p-2 sm:p-3 md:p-4 ${
           isCurrentMove
             ? "bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/20"
             : symbol === "X"
